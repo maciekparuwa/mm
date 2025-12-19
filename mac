@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct element
+{
+    struct element *prev;
+    int dane;  
+    int dane2;
+    struct element *next; 
+};
+
+void dodawanie_na_koniec_f(struct element **poczatek, struct element **koniec)
+{
+    int dane, dane2;
+    printf("Podaj liczbe do zapisania w wezle: ");
+    scanf("%d", &dane);
+    printf("Podaj liczbe 2 do zapisania w wezle: ");
+    scanf("%d", &dane2);
+
+    struct element *nowy = malloc(sizeof(struct element));
+
+    nowy->dane = dane;
+    nowy->dane2 = dane2;
+    nowy->next = NULL;
+
+    if (*poczatek == NULL)
+    {
+        nowy->prev = NULL;
+        *poczatek = nowy;
+        *koniec = nowy;
+    }
+    else
+    {
+        nowy->prev = *koniec;
+        (*koniec)->next = nowy;
+        *koniec = nowy;
+    }
+
+    printf("\nWezel dodany\n");
+}
+
+void wyswietlanie_f(struct element *poczatek)
+{
+    struct element *tmp = poczatek;
+    while (tmp != NULL)
+    {
+        printf("%d, %d\n", tmp->dane, tmp->dane2);
+        tmp = tmp->next;
+    }
+    
+
+}
+
+int main()
+{
+    struct element *poczatek = NULL;
+    struct element *koniec = NULL;
+
+    dodawanie_na_koniec_f(&poczatek, &koniec);
+    dodawanie_na_koniec_f(&poczatek, &koniec);
+
+    wyswietlanie_f(poczatek);
+    return 0;
+}
